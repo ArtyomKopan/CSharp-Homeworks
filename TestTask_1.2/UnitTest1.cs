@@ -6,7 +6,7 @@ public class Tests
     {
         return a.Key == b.Key && a.Value == b.Value;
     }
-    
+
     [Test]
     public void StraightBWTTest1()
     {
@@ -14,7 +14,7 @@ public class Tests
         var answer = new KeyValuePair<string, int>("rdarcaaaabb", 2);
         Assert.That(ComparePairs(answer, BWT.StraightBWT(s)), Is.EqualTo(true));
     }
-    
+
     [Test]
     public void StraightBWTTest2()
     {
@@ -27,13 +27,13 @@ public class Tests
     public void InverseBWTTest1()
     {
         var result = new KeyValuePair<string, int>("rdarcaaaabb", 2);
-        Assert.That(BWT.InverseBWT(result), Is.EqualTo("abracadabra"));
+        Assert.That(BWT.LinearInverseBWT(result), Is.EqualTo("abracadabra"));
     }
-    
+
     [Test]
     public void InverseBWTTest2()
     {
         var result = new KeyValuePair<string, int>("BCABAAA", 2);
-        Assert.That(BWT.InverseBWT(result), Is.EqualTo("ABACABA"));
+        Assert.That(BWT.LinearInverseBWT(result), Is.EqualTo("ABACABA"));
     }
 }

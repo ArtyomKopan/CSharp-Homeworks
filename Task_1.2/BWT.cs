@@ -18,6 +18,18 @@ namespace Task_1._2
             return new_string;
         }
 
+        private static int getLessSymbolsCount(string s, char symbol)
+        {
+            var cnt = 0;
+            foreach (var ch in s)
+            {
+                if (ch < symbol)
+                    cnt++;
+            }
+
+            return cnt;
+        }
+
         private static string getSortedString(string s)
         {
             var list = s.ToList();
@@ -41,6 +53,18 @@ namespace Task_1._2
             }
 
             return count;
+        }
+
+        private static int countSymbolInString(string s, char symbol)
+        {
+            var cnt = 0;
+            foreach (var ch in s)
+            {
+                if (ch == symbol)
+                    cnt++;
+            }
+
+            return cnt;
         }
 
         // прямой BWT
@@ -97,6 +121,29 @@ namespace Task_1._2
             return s;
         }
 
+        public static string LinearInverseBWT(KeyValuePair<string, int> result)
+        {
+            var resultString = result.Key;
+            var position = result.Value;
+            var n = resultString.Length;
+
+            var l = new int[n];
+            for (var i = 0; i < n; ++i)
+                l[i] = countSymbolInString(resultString.Substring(0, i), resultString[i]);
+            var a = new Dictionary<char, int>();
+            foreach (var ch in getUniqueSymbols(resultString))
+                a[ch] = getLessSymbolsCount(resultString, ch);
+
+            string s = "" + resultString[position];
+            while (s.Length != n)
+            {
+                position = l[position] + a[s[0]];
+                s = resultString[position] + s;
+            }
+
+            return s;
+        }
+
         public static void Main()
         {
             Console.Write(
@@ -116,7 +163,7 @@ namespace Task_1._2
                 Console.Write("Введите позицию символа конца строки: ");
                 var position = int.Parse(Console.ReadLine());
                 var argument = new KeyValuePair<string, int>(result, position);
-                Console.WriteLine($"Результат обратного преобразования BWT: {InverseBWT(argument)}");
+                Console.WriteLine($"Результат обратного преобразования BWT: {LinearInverseBWT(argument)}");
             }
         }
     }

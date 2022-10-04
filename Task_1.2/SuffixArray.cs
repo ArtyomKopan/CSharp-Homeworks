@@ -17,10 +17,10 @@ namespace Task_1._2
         {
             for (var i = 0; i < s.Length; ++i)
                 suffixArray.Add(i);
-            insertionSort(ref suffixArray);
+            QuickSort(ref suffixArray, 0, suffixArray.Count - 1);
         }
 
-        private void insertionSort(ref List<int> a)
+        /*private void insertionSort(ref List<int> a)
         {
             for (var i = 1; i < s.Length; ++i)
             {
@@ -31,7 +31,7 @@ namespace Task_1._2
                     j--;
                 }
             }
-        }
+        }*/
 
         private int specialIntComparer(int j, int k)
         {
@@ -44,6 +44,32 @@ namespace Task_1._2
             }
 
             return 0;
+        }
+
+        private int Partition(ref List<int> array, int start, int end)
+        {
+            var marker = start;
+            for (var i = start; i < end; ++i)
+            {
+                if (specialIntComparer(array[i], array[end]) < 0)
+                {
+                    (array[marker], array[i]) = (array[i], array[marker]);
+                    marker++;
+                }
+            }
+
+            (array[marker], array[end]) = (array[end], array[marker]);
+            return marker;
+        }
+
+        private void QuickSort(ref List<int> array, int start, int end)
+        {
+            if (start >= end)
+                return;
+
+            var pivot = Partition(ref array, start, end);
+            QuickSort(ref array, start, pivot - 1);
+            QuickSort(ref array, pivot + 1, end);
         }
     }
 }
