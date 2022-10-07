@@ -2,7 +2,7 @@ using System.Diagnostics;
 
 namespace Task_2._1
 {
-    public class MainClass
+    public class Example
     {
         private static double f() => Math.Exp(100);
 
