@@ -3,11 +3,12 @@
 public class ThreadSafetyQueue<T>
 {
     private readonly List<QueueElement<T>> _elements = new();
+    private readonly object _locker = new();
     private int _size = 0;
 
     public void Enqueue(T element, int priority)
     {
-        lock (_elements)
+        lock (_locker)
         {
             _elements.Add(new QueueElement<T>(element, priority));
         }
@@ -18,11 +19,11 @@ public class ThreadSafetyQueue<T>
 
     public T Dequeue()
     {
-        lock (_elements)
+        lock (_locker)
         {
             if (_elements.Count == 0)
             {
-                Monitor.PulseAll(_elements);
+                Monitor.PulseAll(_locker);
                 // каждые 100 мс проверяем, есть ли что-нибудь в очереди
                 while (true)
                 {
@@ -34,7 +35,7 @@ public class ThreadSafetyQueue<T>
                     Thread.Sleep(100);
                 }
 
-                Monitor.Wait(_elements);
+                Monitor.Wait(_locker);
             }
 
             var returningElement = _elements[0];
@@ -54,5 +55,11 @@ public class ThreadSafetyQueue<T>
         }
     }
 
-    public int Size() => _size;
+    public int Size()
+    {
+        lock (_locker)
+        {
+            return _size;
+        }
+    }
 }

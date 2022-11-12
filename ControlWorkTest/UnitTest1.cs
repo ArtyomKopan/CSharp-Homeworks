@@ -75,6 +75,7 @@ public class Tests
     }
 
 
+    // этот тест проверяет одновременно и Dequeue() с пустой очередью, и FIFO
     [Test]
     public async Task MultiThreadTest2()
     {
