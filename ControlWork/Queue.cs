@@ -1,16 +1,17 @@
 ﻿namespace ControlWork;
 
-public class ThreadSafetyQueue<T>
+public class ThreadSafetyQueue<T, P>
+    where P : IComparable
 {
-    private readonly List<QueueElement<T>> _elements = new();
+    private readonly List<QueueElement<T, P>> _elements = new();
     private readonly object _locker = new();
     private int _size = 0;
 
-    public void Enqueue(T element, int priority)
+    public void Enqueue(T element, P priority)
     {
         lock (_locker)
         {
-            _elements.Add(new QueueElement<T>(element, priority));
+            _elements.Add(new QueueElement<T, P>(element, priority));
         }
 
         Interlocked.Increment(ref _size);
@@ -41,7 +42,8 @@ public class ThreadSafetyQueue<T>
             var returningElement = _elements[0];
             for (var i = 1; i < _elements.Count; ++i)
             {
-                if (_elements[i].Priority > returningElement.Priority)
+                if (_elements[i].Priority.CompareTo(returningElement.Priority) > 0)
+                    //if (_elements[i].Priority > returningElement.Priority)
                 {
                     returningElement = _elements[i];
                 }

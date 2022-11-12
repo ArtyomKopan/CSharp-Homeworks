@@ -1,6 +1,6 @@
 ﻿using ControlWork;
 
-var q = new ThreadSafetyQueue<string>();
+var q = new ThreadSafetyQueue<string, int>();
 
 q.Enqueue("a", 1);
 q.Enqueue("b", 2);

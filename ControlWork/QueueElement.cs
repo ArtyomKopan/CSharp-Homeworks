@@ -1,11 +1,12 @@
 namespace ControlWork;
 
-public class QueueElement<T>
+public class QueueElement<T, P>
+    where P : IComparable
 {
     public readonly T Value;
-    public readonly int Priority;
+    public readonly P Priority;
 
-    public QueueElement(T value, int priority)
+    public QueueElement(T value, P priority)
     {
         Value = value;
         Priority = priority;

@@ -3,7 +3,7 @@ public class Tests
     [Test]
     public void SingleThreadTest()
     {
-        var q = new ControlWork.ThreadSafetyQueue<int>();
+        var q = new ControlWork.ThreadSafetyQueue<int, int>();
 
         for (var i = 1; i < 11; ++i)
         {
@@ -29,7 +29,7 @@ public class Tests
     [Test]
     public void OrderTest()
     {
-        var q = new ControlWork.ThreadSafetyQueue<string>();
+        var q = new ControlWork.ThreadSafetyQueue<string, int>();
 
         q.Enqueue("a", 1);
         q.Enqueue("b", 2);
@@ -55,7 +55,7 @@ public class Tests
     [Test]
     public async Task MultiThreadTest()
     {
-        var q = new ControlWork.ThreadSafetyQueue<string>();
+        var q = new ControlWork.ThreadSafetyQueue<string, int>();
 
         var thread1 = new Task<string>(() => q.Dequeue());
         var thread2 = new Task(() =>
@@ -79,7 +79,7 @@ public class Tests
     [Test]
     public async Task MultiThreadTest2()
     {
-        var q = new ControlWork.ThreadSafetyQueue<string>();
+        var q = new ControlWork.ThreadSafetyQueue<string, int>();
 
         var thread1 = new Task<string>(() =>
         {
