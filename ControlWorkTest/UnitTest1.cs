@@ -25,20 +25,51 @@ public class Tests
         Assert.That(actual, Is.EqualTo(expected));
     }
 
+    // здесь мы проверяем выполнение принципа FIFO для очереди
     [Test]
-    public void MultiThreadTest()
+    public void OrderTest()
     {
         var q = new ControlWork.ThreadSafetyQueue<string>();
 
-        var s1 = "";
+        q.Enqueue("a", 1);
+        q.Enqueue("b", 2);
+        q.Enqueue("c", 2);
+        q.Enqueue("d", 3);
 
-        var thread1 = new Thread(() => s1 = q.Dequeue());
+        var actual = new List<string>();
+        while (q.Size() > 0)
+        {
+            actual.Add(q.Dequeue());
+        }
+
+        var expected = new List<string>();
+        expected.Add("d");
+        expected.Add("b");
+        expected.Add("c");
+        expected.Add("a");
+
+        Assert.That(actual, Is.EqualTo(expected));
+    }
+
+    // здесь мы проверяем корректное поведение при вызове Dequeue() для пустой очереди
+    [Test]
+    public async Task MultiThreadTest()
+    {
+        var q = new ControlWork.ThreadSafetyQueue<string>();
+
+        var thread1 = new Task<string>(() => q.Dequeue());
+        var thread2 = new Task(() =>
+        {
+            q.Enqueue("a", 1);
+            q.Enqueue("b", 2);
+            q.Enqueue("c", 3);
+        });
+
         thread1.Start();
-        var thread2 = new Thread(() => q.Enqueue("a", 2));
         thread2.Start();
 
-        thread2.Join();
-        thread1.Join();
+        var s1 = await thread1;
+        await thread2;
 
         Assert.That(s1, Is.EqualTo("a"));
     }

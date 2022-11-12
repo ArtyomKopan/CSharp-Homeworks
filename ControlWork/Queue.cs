@@ -13,6 +13,7 @@ public class ThreadSafetyQueue<T>
         }
 
         Interlocked.Increment(ref _size);
+        Thread.Sleep(100);
     }
 
     public T Dequeue()
@@ -22,6 +23,7 @@ public class ThreadSafetyQueue<T>
             if (_elements.Count == 0)
             {
                 Monitor.PulseAll(_elements);
+                // каждые 100 мс проверяем, есть ли что-нибудь в очереди
                 while (true)
                 {
                     if (_elements.Count > 0)
@@ -29,7 +31,7 @@ public class ThreadSafetyQueue<T>
                         break;
                     }
 
-                    Thread.Sleep(500);
+                    Thread.Sleep(100);
                 }
 
                 Monitor.Wait(_elements);
@@ -45,7 +47,9 @@ public class ThreadSafetyQueue<T>
             }
 
             _elements.Remove(returningElement);
+
             Interlocked.Decrement(ref _size);
+
             return returningElement.Value;
         }
     }
