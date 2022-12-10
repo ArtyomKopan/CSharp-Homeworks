@@ -2,38 +2,33 @@ using Task_1._2;
 
 public class Tests
 {
-    private bool ComparePairs(KeyValuePair<string, int> a, KeyValuePair<string, int> b)
+    [Test]
+    public void StraightBwtTest1()
     {
-        return a.Key == b.Key && a.Value == b.Value;
+        var originalString = "abracadabra";
+        var answer = ("rdarcaaaabb", 2);
+        Assert.That(Bwt.StraightBwt(originalString), Is.EqualTo(answer));
     }
 
     [Test]
-    public void StraightBWTTest1()
+    public void StraightBwtTest2()
     {
-        var s = "abracadabra";
-        var answer = new KeyValuePair<string, int>("rdarcaaaabb", 2);
-        Assert.That(ComparePairs(answer, BWT.StraightBWT(s)), Is.EqualTo(true));
+        var originalString = "ABACABA";
+        var answer = ("BCABAAA", 2);
+        Assert.That(Bwt.StraightBwt(originalString), Is.EqualTo(answer));
     }
 
     [Test]
-    public void StraightBWTTest2()
+    public void InverseBwtTest1()
     {
-        var s = "ABACABA";
-        var answer = new KeyValuePair<string, int>("BCABAAA", 2);
-        Assert.That(ComparePairs(answer, BWT.StraightBWT(s)), Is.EqualTo(true));
+        var resultString = ("rdarcaaaabb", 2);
+        Assert.That(Bwt.LinearInverseBwt(resultString), Is.EqualTo("abracadabra"));
     }
 
     [Test]
-    public void InverseBWTTest1()
+    public void InverseBwtTest2()
     {
-        var result = new KeyValuePair<string, int>("rdarcaaaabb", 2);
-        Assert.That(BWT.LinearInverseBWT(result), Is.EqualTo("abracadabra"));
-    }
-
-    [Test]
-    public void InverseBWTTest2()
-    {
-        var result = new KeyValuePair<string, int>("BCABAAA", 2);
-        Assert.That(BWT.LinearInverseBWT(result), Is.EqualTo("ABACABA"));
+        var result = ("BCABAAA", 2);
+        Assert.That(Bwt.LinearInverseBwt(result), Is.EqualTo("ABACABA"));
     }
 }
