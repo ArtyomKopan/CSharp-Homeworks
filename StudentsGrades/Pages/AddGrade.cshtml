@@ -1,0 +1,56 @@
+﻿@page
+@model StudentsGrades.Pages.AddGradeModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Выставить оценку</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css" />
+</head>
+<body>
+    <div class="col">
+        <div class="row mb-3 text-center"><h4 class="col-sm-6">Поставьте оценку: </h4></div>
+
+        <form asp-action="AddGrade" method="post">
+            <div class="row mb-3">
+                <div class="col-sm-4">
+                    <label asp-for="GradeItem.Name"
+                           class="col-sm-1 col-form-label col-form-label-lg">Имя студента: </label>
+                </div>
+                <div class="col-sm-4">
+                    <input asp-for="GradeItem.Name" class="form-control form-control-lg" />
+                </div>
+            </div>
+            <span asp-validation-for="GradeItem.Name" class="text-danger"></span>
+
+            <div class="row mb-3">
+                <div class="col-sm-4">
+                    <label asp-for="GradeItem.Subject" class="col-sm-1 col-form-label col-form-label-lg">Предмет: </label>
+                </div>
+                <div class="col-sm-4">
+                    <input asp-for="GradeItem.Subject" class="form-control form-control-lg" />
+                </div>
+            </div>
+            <span asp-validation-for="GradeItem.Subject" class="text-danger"></span>
+
+            <div class="row mb-3">
+                <div class="col-sm-4">
+                    <label asp-for="GradeItem.Grade" class="col-sm-1 col-form-label col-form-label-lg">Оценка: </label>
+                </div>
+                <div class="col-sm-4">
+                    <input asp-for="GradeItem.Grade" class="form-control form-control-lg" />
+                </div>
+            </div>
+            <span asp-validation-for="GradeItem.Grade" class="text-danger"></span>
+
+            <button type="submit" class="btn btn-primary btn-lg">Выставить оценку</button>
+        </form>
+
+        <div class="text-center">
+            <br />
+            <a class="btn btn-primary" asp-page="Index">Вернуться на главную</a>
+        </div>
+    </div>
+</body>
+</html>
