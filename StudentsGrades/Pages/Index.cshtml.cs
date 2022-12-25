@@ -5,6 +5,9 @@ namespace StudentsGrades.Pages
 {
 	public class IndexModel : PageModel
 	{
+		/// <summary>
+		/// Execute get request on page Index
+		/// </summary>
 		public void OnGet()
 		{
 		}

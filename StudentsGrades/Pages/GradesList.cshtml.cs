@@ -12,10 +12,17 @@ namespace StudentsGrades.Pages
     {
         private readonly StudentsGradesDbContext _context;
 
+        /// <summary>
+        /// Initialize database context
+        /// </summary>
+        /// <param name="context"></param>
         public GradesListModel(StudentsGradesDbContext context) => _context = context;
 
         public IList<GradeItem> Grades { get; private set; } = new List<GradeItem>();
 
+        /// <summary>
+        /// Execute get request on page GradesList
+        /// </summary>
         public void OnGet()
         {
             Grades = _context.Grades.OrderBy(p => p.GradeItemId).ToList();
