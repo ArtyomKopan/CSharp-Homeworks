@@ -1,0 +1,40 @@
+﻿@page
+@model StudentsGrades.Pages.GradesListModel
+@{
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Список оценок</title>
+</head>
+<body>
+    <h2>Список оценок:</h2>
+    <div>
+    <table>
+        <thead>
+            <tr>
+                <th>Студент</th>
+                <th>Предмет</th>
+                <th>Оценка</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (StudentsGrades.Data.GradeItem p in Model.Grades)
+            {
+                <tr>
+                    <td>@p.Name</td>
+                    <td>@p.Subject</td>
+                    <td>@p.Grade</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+
+    <hr />
+    <div class="footer">
+        <a class="btn btn-primary" asp-page="Index">Вернуться на главную</a>
+    </div>
+</body>
+</html>
